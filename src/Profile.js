@@ -22,7 +22,7 @@ function Profile() {
       redirect: "follow"
     };
 
-    fetch("https://www.melivecode.com/api/auth/user", requestOptions)
+    fetch("http://localhost:3333/profile", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if(result.status === 'ok') {
@@ -52,7 +52,6 @@ function Profile() {
         <div>{user.id}</div>
         <div>{user.fname}</div>
         <div>{user.lname}</div>
-        <div>{user.username}</div>
         <div>{user.email}</div>
         <div><img src={user.avatar} alt={user.id} width={100}/></div>
         <div><button onClick={logout}>logout</button></div>
