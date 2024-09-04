@@ -9,12 +9,12 @@ function Profile() {
   const MySwal = withReactContent(Swal)
 
   const [isLoaded, setIsLoaded] = useState(true);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + token );
+    myHeaders.append("Authorization", "Bearer " + token);
 
     const requestOptions = {
       method: "GET",
@@ -25,17 +25,17 @@ function Profile() {
     fetch("http://localhost:3333/profile", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        if(result.status === 'ok') {
+        if (result.status === 'ok') {
           setUser(result.user)
           setIsLoaded(false)
-        }else if (result.status === 'forbidden') {
+        } else if (result.status === 'forbidden') {
           MySwal.fire({
             html: <i>{result.message}</i>,
             icon: 'error'
-        }).then((value) => {
-          navigate('/')
-        })
-         }
+          }).then((value) => {
+            navigate('/')
+          })
+        }
         console.log(result)
       })
       .catch((error) => console.error(error));
@@ -45,20 +45,29 @@ function Profile() {
     localStorage.removeItem('token')
     navigate('/')
   }
-  if(isLoaded) return(<div>Loading</div>)
-  else{
+  if (isLoaded) {
+    return (<div>Loading</div>)
+  }
+  else {
+    console.log(user)
     return (
       <div>
         <div>{user.id}</div>
+        <div>{user.email}</div>
         <div>{user.fname}</div>
         <div>{user.lname}</div>
-        <div>{user.email}</div>
-        <div><img src={user.avatar} alt={user.id} width={100}/></div>
+        <div>
+          <img 
+            src={user.image ? `data:image/jpeg;base64,${user.image}` : 'default-image-url'} 
+            alt={user.id} 
+            width={100}
+          />
+        </div>
         <div><button onClick={logout}>logout</button></div>
-     </div>
+      </div>
     )
   }
-  
+
 }
 
 export default Profile
