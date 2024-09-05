@@ -1,8 +1,9 @@
 import {Routes, Route} from "react-router-dom"
 import Login from "./Login";
 import Profile from "./Profile";
-import Register from "./Register"
+import Register from "./Register";
 import BookingDetails from "./bookingDetail";
+import Booking from "./booking";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/bookingDetail" element={<BookingDetails/>}/>
+        <Route path="/booking" element={<Booking/>}/>
+
  
       </Routes>
 
