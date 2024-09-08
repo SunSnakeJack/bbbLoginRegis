@@ -46,25 +46,24 @@ function BookingDetails() {
   if (isLoaded) {
     return <div>Loading...</div>;
   } else {
-    console.log(booking);
     return (
       <div>
-        <h2>Booking Details</h2>
-        <div> {booking.Username}</div>
-        <div> {booking.NumberOfRooms}</div>
-        <div> {booking.roomName}</div>
-        <div> {booking.roomType}</div>
-        <div> {booking.roomPrice}</div>
-        <div> {booking.roomArea} </div>
-        <div> {new Date(booking.checkIn).toLocaleDateString()}</div>
-        <div> {new Date(booking.checkOut).toLocaleDateString()}</div>
-        <div>
-          <img 
-            src={booking.roomImage ? `data:image/jpeg;base64,${booking.roomImage}` : 'default-room-image-url'} 
-            alt={booking.roomName} 
-            width={100}
-          />
-        </div>
+        {Array.isArray(booking) && booking.length > 0 ? (
+          booking.map((booking, index) => (
+            <div key={index}>
+              <h2>Booking Details</h2>
+              <div> {booking.bookingNumber}</div>
+              <div> {booking.NumberOfRooms}</div>
+              <div> {booking.roomName}</div>
+              <div> {booking.roomType}</div>
+              <div> {new Date(booking.checkIn).toLocaleDateString()}</div>
+              <div> {new Date(booking.checkOut).toLocaleDateString()}</div>
+              <div> {booking.payment}</div>
+            </div>
+          ))
+        ) : (
+          <div>No bookings available</div>
+        )}
       </div>
     );
   }
